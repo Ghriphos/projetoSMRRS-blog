@@ -1,6 +1,6 @@
 from flask import Flask, request
 import dbconnect
-import controller
+import server
 import re
 
 def solve(emailToTest):
@@ -10,12 +10,12 @@ def solve(emailToTest):
     return False
 
 
-def userRegister(email):
+def userRegister(email, username, passwd):
     if (solve(email)):
         mydb = dbconnect.connect()
         mycursor = mydb.cursor()
-        sql = "insert into emails (notvalidemail) values (%s)"
-        val = email
+        sql = "insert into users (email, username, passwd) values (%s, %s, %s)"
+        val = email, username, passwd
         mycursor.execute(sql,val)
         print("passou aqui")
 
