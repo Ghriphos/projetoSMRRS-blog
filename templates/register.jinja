@@ -8,6 +8,9 @@
         <div class="text-xl text-white font-medium">Não tem um conta?</div>
         <div class="text-white/80 ">Registre-se agora mesmo!</div>
     </div>
+    {% if error is defined %}
+    <div class="text-red-500 py-2 font-medium">{{ error }}</div>
+    {% endif %}
     <div class="md:flex gap-3 block">
         <div class="w-full mt-2">
             <label for="email" class="leading-8 my-3 text-white/70 font-medium">Nome de Usuário</label>
