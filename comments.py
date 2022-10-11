@@ -1,30 +1,28 @@
 from flask import Flask, request, render_template
 import dbconnect, controller
 
-
-def insertPost(user_id, title, text, description, photo):
-    if isinstance(user_id, int) and isinstance(title, str) and isinstance(text, str) and isinstance(description, str) and isinstance(photo, str):
+def insertComment(context, post_id, user_id):
+    if isinstance(context, str) and isinstance(post_id, int) and isinstance(user_id, int):
         mydb = dbconnect.connect()
         mycursor = mydb.cursor()
-        sql = "insert into posts (user_id, title, content, description, photo) values (%s, %s, %s, %s, %s)"
+        sql = "insert into comment (context, post_id, user_id) values (%s, %s, %s)"
 
-        val = user_id, title, text, description, photo
+        val = context, post_id, user_id
         mycursor.execute(sql,val)
 
         mydb.commit()
         rows_count = mycursor.rowcount
         if rows_count > 0:
-            return "postagem concluída"
+            return "comentario feito com sucesso"
         else:
-            return "postagem mal-sucedida"
-    return "parametros incorretos"
+            return "comentario mal-sucedido"
 
-def retrievePost(post_id):
+def retrieveComment(comment_id):
     mydb = dbconnect.connect()
     mycursor = mydb.cursor(buffered=True)
     sql = "select title, content, description from posts where post_id = %s;"
 
-    val = post_id
+    val = comment_id
 
     mycursor.execute(sql,val)
 
@@ -35,4 +33,3 @@ def retrievePost(post_id):
         return "???"
     else:
         return "???"
-
