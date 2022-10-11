@@ -21,6 +21,3 @@ def emailRegister():
     passwd = request.form['passwd']
     
     return usersUtility.userRegister(email, username, passwd), usersUtility.valid_mail_characters(email)
-
-
-
