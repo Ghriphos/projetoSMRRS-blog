@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/login",methods=['GET'])
 def renderLogin():
-    return render_template("login.html")
+    return render_template("login.jinja")
 
 @app.route("/login",methods=['POST'])
 def userLogin():
