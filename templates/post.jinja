@@ -1,0 +1,25 @@
+{% extends "main.jinja" %}
+
+{% block title %}{{ post.title }}{% endblock title %}
+
+{% block content %}
+<div class="pt-10">
+    <h1 class="font-slab text-white text-2xl font-semibold">{{ post.title }}</h1>
+    <h3 class="font-content py-2 text-lg text-stone-200">{{ post.description }}</h3>
+    <div class="font-sans py-3 flex items-center">
+        <div class="flex items-center justify-center bg-zinc-700 w-9 h-9 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+            </svg>
+        </div>
+        <div class="text-sm ml-2 leading-5">
+            <div class="text-stone-100/90 font-medium">{{ author.username }}</div>
+            <div class="text-stone-100/70">{{ post.created_at }}</div>
+        </div>
+    </div>
+</div>
+<div class="font-slab mt-6 text-lg leading-7 text-white/80">
+    {{ post.content }}
+</div>
+{% endblock content %}
