@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Out-2022 às 02:07
+-- Tempo de geração: 13-Out-2022 às 01:56
 -- Versão do servidor: 10.4.25-MariaDB
 -- versão do PHP: 8.1.10
 
@@ -24,14 +24,15 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `comment`
+-- Estrutura da tabela `comments`
 --
 
-CREATE TABLE `comment` (
+CREATE TABLE `comments` (
   `comment_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
-  `content` text DEFAULT NULL
+  `content` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -45,8 +46,17 @@ CREATE TABLE `posts` (
   `user_id` int(11) NOT NULL,
   `content` text NOT NULL,
   `title` varchar(256) NOT NULL,
-  `description` varchar(256) DEFAULT NULL
+  `description` varchar(256) DEFAULT NULL,
+  `photo` text DEFAULT NULL,
+  `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `posts`
+--
+
+INSERT INTO `posts` (`post_id`, `user_id`, `content`, `title`, `description`, `photo`, `created_at`) VALUES
+(1, 123, 'lorem ipsun fodase lorem ipsun fodase lorem ipsun fodase lorem ipsun fodase', 'ghriphosaaaa', 'lorem ipsun fodase', 'naotem', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -59,17 +69,25 @@ CREATE TABLE `users` (
   `passwd` varchar(25) NOT NULL,
   `username` varchar(25) NOT NULL,
   `email_verified_at` datetime DEFAULT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `users`
+--
+
+INSERT INTO `users` (`email`, `passwd`, `username`, `email_verified_at`, `user_id`, `created_at`) VALUES
+('luisfernando@hotmail.com', '123123', 'ghriphos', '2022-10-11 11:45:22', 123, '2022-10-11 11:45:22');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices para tabela `comment`
+-- Índices para tabela `comments`
 --
-ALTER TABLE `comment`
+ALTER TABLE `comments`
   ADD PRIMARY KEY (`comment_id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `post_id` (`post_id`);
@@ -92,27 +110,33 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT de tabela `comment`
+-- AUTO_INCREMENT de tabela `comments`
 --
-ALTER TABLE `comment`
+ALTER TABLE `comments`
   MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- Restrições para despejos de tabelas
 --
 
 --
--- Limitadores para a tabela `comment`
+-- Limitadores para a tabela `comments`
 --
-ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`);
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`);
 
 --
 -- Limitadores para a tabela `posts`

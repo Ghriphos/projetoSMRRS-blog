@@ -1,8 +1,5 @@
 from flask import Flask, request, render_template
-import dbconnect
-import controller
-import validateEmail
-import re
+import dbconnect, controller, validateEmail, re
 
 def valid_mail_characters(emailToTest):
     allowedCharacters = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"

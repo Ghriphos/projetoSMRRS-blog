@@ -1,14 +1,19 @@
 from flask import Flask, request, render_template
-import dbconnect, controller
+from datetime import datetime
+import dbconnect, controller, re
 
 
-def insertPost(user_id, title, text, description, photo):
-    if isinstance(user_id, int) and isinstance(title, str) and isinstance(text, str) and isinstance(description, str) and isinstance(photo, str):
+def insertPost(user_id, title, content, description, photo):
+    intAllowedCharacter = "^[0-9]+$"
+    if re.match(intAllowedCharacter,user_id):
+        user_id = int(user_id)
+        created_at = datetime.now
+        created_at = str(created_at)
         mydb = dbconnect.connect()
         mycursor = mydb.cursor()
-        sql = "insert into posts (user_id, title, content, description, photo) values (%s, %s, %s, %s, %s)"
+        sql = "insert into posts (user_id, title, content, description, photo, created_at) values (%s, %s, %s, %s, %s, %s)"
 
-        val = user_id, title, text, description, photo
+        val = user_id, title, content, description, photo, created_at
         mycursor.execute(sql,val)
 
         mydb.commit()
@@ -17,12 +22,13 @@ def insertPost(user_id, title, text, description, photo):
             return "postagem concluída"
         else:
             return "postagem mal-sucedida"
-    return "parametros incorretos"
+    else:
+        return "Parametros incorretos"
 
 def retrievePost(post_id):
     mydb = dbconnect.connect()
     mycursor = mydb.cursor(buffered=True)
-    sql = "select title, content, description from posts where post_id = %s;"
+    sql = "select user_id, title, content, description, photo, created_at from posts where post_id = %s;"
 
     val = post_id
 
@@ -36,3 +42,5 @@ def retrievePost(post_id):
     else:
         return "???"
 
+
+"^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"

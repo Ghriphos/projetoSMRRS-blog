@@ -22,9 +22,9 @@ def emailRegister():
 def createPost():
     user_id = request.form['user_id']
     title = request.form['title']
-    text = request.form['text']
+    content = request.form['content']
     description = request.form['description']
     photo = request.form['photo']
     
-    return posts.insertPost(user_id, title, text, description, photo)
+    return posts.insertPost(user_id, title, content, description, photo)
 
