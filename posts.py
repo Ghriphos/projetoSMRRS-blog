@@ -4,11 +4,10 @@ import dbconnect, controller, re
 
 
 def insertPost(user_id, title, content, description, photo):
-    intAllowedCharacter = "^[0-9]+$"
-    if re.match(intAllowedCharacter,user_id):
+    intAllowedCharacters = "^[0-9]+$"
+    if re.match(intAllowedCharacters,user_id):
         user_id = int(user_id)
-        created_at = datetime.now
-        created_at = str(created_at)
+        created_at = str(datetime.now)
         mydb = dbconnect.connect()
         mycursor = mydb.cursor()
         sql = "insert into posts (user_id, title, content, description, photo, created_at) values (%s, %s, %s, %s, %s, %s)"
@@ -18,6 +17,7 @@ def insertPost(user_id, title, content, description, photo):
 
         mydb.commit()
         rows_count = mycursor.rowcount
+
         if rows_count > 0:
             return "postagem concluída"
         else:
@@ -26,21 +26,29 @@ def insertPost(user_id, title, content, description, photo):
         return "Parametros incorretos"
 
 def retrievePost(post_id):
-    mydb = dbconnect.connect()
-    mycursor = mydb.cursor(buffered=True)
-    sql = "select user_id, title, content, description, photo, created_at from posts where post_id = %s;"
+    intAllowedCharacters = "^[0-9]+$"
+    if re.match(intAllowedCharacters, post_id):
+        post_id = int(post_id)
+        mydb = dbconnect.connect()
+        mycursor = mydb.cursor(buffered=True)
 
-    val = post_id
+        post_id = str(post_id)
 
-    mycursor.execute(sql,val)
+        sql = "select user_id, title, content, description, photo, created_at from posts where post_id = " + post_id
 
-    mydb.commit()
+        mycursor.execute(sql)
 
-    rowsCount = mycursor.rowcount
-    if rowsCount > 0:
-        return "???"
+        mydb.commit()
+
+        myresult = mycursor.fetchall()
+
+        rowsCount = mycursor.rowcount
+        if rowsCount > 0:
+            return myresult
+        else:
+            return "deu ruim"
     else:
-        return "???"
+        return "parametros incorretos"
 
 
 "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"

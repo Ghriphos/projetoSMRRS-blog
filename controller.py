@@ -28,3 +28,9 @@ def createPost():
     
     return posts.insertPost(user_id, title, content, description, photo)
 
+@app.route("/selectPosts",methods=['POST'])
+def selectPost():
+    post_id = request.form['post_id']
+    
+    return posts.retrievePost(post_id)
+

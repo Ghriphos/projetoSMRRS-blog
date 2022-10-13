@@ -5,5 +5,5 @@ def connect():
         host="localhost",
         user="root",
         password="",
-        database="researchProjectDB")
+        database="researchprojectdb")
     return(dbconnection)
