@@ -7,7 +7,23 @@
     <title>{% block title %}{% endblock %}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600&display=swap" rel="stylesheet">
-    <link href="/static/tw.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkzinc: "#111113",
+                    },
+                    fontFamily: {
+                        slab: ["Roboto Slab", "serif"],
+                        content: ["Open Sans", "sans-serif"],
+                    },
+                },
+            },
+            plugins: [],
+        }
+    </script>
 </head>
 
 <body>
