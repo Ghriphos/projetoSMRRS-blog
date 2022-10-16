@@ -1,13 +1,15 @@
 from flask import Flask, request, render_template
-import dbconnect, controller
+import dbconnect, controller, re, dateFunctions
 
-def insertComment(context, post_id, user_id):
-    if isinstance(context, str) and isinstance(post_id, int) and isinstance(user_id, int):
+def insertComment(content, post_id, user_id):
+    intAllowedCharacters = "^[0-9]+$"
+    if re.match(intAllowedCharacters, post_id) and re.match(intAllowedCharacters, user_id):
+        created_at = dateFunctions.now()
         mydb = dbconnect.connect()
         mycursor = mydb.cursor()
-        sql = "insert into comment (context, post_id, user_id) values (%s, %s, %s)"
+        sql = "insert into comments (content, post_id, user_id, created_at) values (%s, %s, %s, %s)"
 
-        val = context, post_id, user_id
+        val = content, post_id, user_id, created_at
         mycursor.execute(sql,val)
 
         mydb.commit()
@@ -16,20 +18,29 @@ def insertComment(context, post_id, user_id):
             return "comentario feito com sucesso"
         else:
             return "comentario mal-sucedido"
+    else:
+        return "parametros incorretos"
 
 def retrieveComment(comment_id):
-    mydb = dbconnect.connect()
-    mycursor = mydb.cursor(buffered=True)
-    sql = "select title, content, description from posts where post_id = %s;"
+    intAllowedCharacters = "^[0-9]+$"
+    if re.match(intAllowedCharacters, comment_id):
+        mydb = dbconnect.connect()
+        mycursor = mydb.cursor(buffered=True)
 
-    val = comment_id
+        comment_id = str(comment_id)
 
-    mycursor.execute(sql,val)
+        sql = "select * from comments where comment_id = " + comment_id
 
-    mydb.commit()
+        mycursor.execute(sql)
 
-    rowsCount = mycursor.rowcount
-    if rowsCount > 0:
-        return "???"
+        mydb.commit()
+
+        myresult = mycursor.fetchall()
+
+        rowsCount = mycursor.rowcount
+        if rowsCount > 0:
+            return myresult
+        else:
+            return "deu ruim"
     else:
-        return "???"
+        return "parametros incorretos"

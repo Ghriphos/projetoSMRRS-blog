@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-import usersUtility, posts
+import usersUtility, posts, comments
 
 app = Flask(__name__, static_url_path='/static/')
 
@@ -33,4 +33,17 @@ def selectPost():
     post_id = request.form['post_id']
     
     return posts.retrievePost(post_id)
+    
+@app.route("/comments", methods=['POST'])
+def createComment():
+    user_id = request.form['user_id']
+    post_id = request.form['post_id']
+    content = request.form['content']
 
+    return comments.insertComment(content, post_id, user_id)
+
+@app.route("/selectComment",methods=['POST'])
+def selectComment():
+    comment_id = request.form['comment_id']
+    
+    return comments.retrieveComment(comment_id)

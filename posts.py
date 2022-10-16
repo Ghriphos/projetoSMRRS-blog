@@ -1,13 +1,14 @@
+from venv import create
 from flask import Flask, request, render_template
 from datetime import datetime
-import dbconnect, controller, re
+import dbconnect, controller, re, dateFunctions
 
 
 def insertPost(user_id, title, content, description, photo):
     intAllowedCharacters = "^[0-9]+$"
     if re.match(intAllowedCharacters,user_id):
+        created_at = dateFunctions.now()
         user_id = int(user_id)
-        created_at = str(datetime.now)
         mydb = dbconnect.connect()
         mycursor = mydb.cursor()
         sql = "insert into posts (user_id, title, content, description, photo, created_at) values (%s, %s, %s, %s, %s, %s)"
@@ -34,7 +35,7 @@ def retrievePost(post_id):
 
         post_id = str(post_id)
 
-        sql = "select user_id, title, content, description, photo, created_at from posts where post_id = " + post_id
+        sql = "select * from posts where post_id = " + post_id
 
         mycursor.execute(sql)
 
@@ -49,6 +50,3 @@ def retrievePost(post_id):
             return "deu ruim"
     else:
         return "parametros incorretos"
-
-
-"^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
