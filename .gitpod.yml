@@ -8,7 +8,7 @@ tasks:
   - name: Create Database
     command: 'mysql -u root -p -e "create database researchprojectdb"'
   - name: Load SQL into Database
-    command: 'mysql -u root -p researchprojectdb < ./researchprojectdb.sql'
+    command: 'mysql -u root -D researchprojectdb < ./researchprojectdb.sql'
 vscode:
   extensions:
     - ms-python.python
