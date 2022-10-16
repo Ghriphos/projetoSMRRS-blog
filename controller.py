@@ -28,7 +28,7 @@ def emailRegister():
     username = request.form['username']
     passwd = request.form['passwd']
     
-    return usersUtility.userRegister(email, username, passwd), usersUtility.valid_mail_characters(email)
+    return usersUtility.userRegister(email, username, passwd)
 
 @app.route("/posts",methods=['POST'])
 def createPost():

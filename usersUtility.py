@@ -19,10 +19,10 @@ def userRegister(email, username, passwd):
 
         rowsCount = mycursor.rowcount
         if rowsCount > 0:
-            return validateEmail.insertEmailAndValidationCode(email)
+            return render_template("main.jinja")
         else:
-            return "Houve um erro interno"
-    return "a lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente."
+            return render_template('register.jinja', error="Houve um erro interno.")     
+    return render_template('register.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
 
 def userLogin(email, passwd):
     mydb = dbconnect.connect()
@@ -36,6 +36,6 @@ def userLogin(email, passwd):
 
     rowsCount = mycursor.rowcount
     if rowsCount > 0:
-        return render_template('index.html')
+        return render_template('main.jinja')
     else:
-        print('ou tu n tem cadastro ou botou errado joia?')
+        return render_template('login.jinja', error='ou tu n tem cadastro ou botou errado joia?')
