@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session
 from dotenv import load_dotenv
 import usersUtility, posts, comments, os
 
@@ -25,6 +25,12 @@ def userLogin():
     passwd = request.form['passwd']
 
     return usersUtility.userLogin(email,passwd)
+
+@app.route("/logout",methods=['POST'])
+def logout():
+    session.pop('username', None)
+
+    return render_template("main.jinja")
 
 @app.route("/register",methods=['POST'])
 def emailRegister():
