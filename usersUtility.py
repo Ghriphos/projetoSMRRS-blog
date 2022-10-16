@@ -18,24 +18,28 @@ def userRegister(email, username, passwd):
 
         rowsCount = mycursor.rowcount
         if rowsCount > 0:
+            session['username'] = username
+            print(session['username'])
             return render_template("main.jinja")
         else:
-            return render_template('register.jinja', error="Houve um erro interno.")     
+            return render_template('register.jinja', error="Houve um erro interno.")
     return render_template('register.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
 
 def userLogin(email, passwd):
-    mydb = dbconnect.connect()
-    mycursor = mydb.cursor(buffered=True)
-    sql = "select * from users where email = %s and passwd = %s;"
-    val = email, passwd
-    mycursor.execute(sql,val)
-    mydb.commit()
-    myresult = mycursor.fetchall()
-    rowsCount = mycursor.rowcount
+    if (valid_mail_characters(email)):
+        mydb = dbconnect.connect()
+        mycursor = mydb.cursor(buffered=True)
+        sql = "select * from users where email = %s and passwd = %s;"
+        val = email, passwd
+        mycursor.execute(sql,val)
+        mydb.commit()
+        myresult = mycursor.fetchall()
 
-    if rowsCount > 0:
-        session['username'] = myresult[0][2]
-        print(session['username'])
-        return render_template('main.jinja')
-    else:
-        return render_template('login.jinja', error='ou tu n tem cadastro ou botou errado joia?')
+        rowsCount = mycursor.rowcount
+        if rowsCount > 0:
+            session['username'] = myresult[0][2]
+            print(session['username'])
+            return render_template('main.jinja')
+        else:
+            return render_template('login.jinja', error='ou tu n tem cadastro ou botou errado joia?')
+    return render_template('register.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
