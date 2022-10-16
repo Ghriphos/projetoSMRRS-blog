@@ -6,4 +6,5 @@ def connect():
         user="root",
         password="",
         database="researchprojectdb")
+        
     return(dbconnection)

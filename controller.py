@@ -1,7 +1,11 @@
 from flask import Flask, request, render_template
-import usersUtility, posts, comments
+from dotenv import load_dotenv
+import usersUtility, posts, comments, os
+
+load_dotenv()
 
 app = Flask(__name__, static_url_path='/static/')
+app.secret_key = os.getenv('SECRET_KEY')
 
 @app.route("/",methods=['GET'])
 def renderMain():
