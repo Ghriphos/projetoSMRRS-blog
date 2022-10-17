@@ -41,3 +41,21 @@ def retrieveComment(comment_id):
 
     else:
         return "parametros incorretos"
+
+def retrievePostComment(post_id):
+    intAllowedCharacters = "^[0-9]+$"
+    if re.match(intAllowedCharacters, post_id):
+        mydb = dbconnect.connect()
+        mycursor = mydb.cursor(buffered=True)
+        post_id = str(post_id)
+        sql = "select * from comments where post_id = %s"
+        val = (post_id,)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        myresult = mycursor.fetchall()
+        rowsCount = mycursor.rowcount
+
+        if rowsCount > 0:
+            return myresult
+        else:
+            return "deu ruim"

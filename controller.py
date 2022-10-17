@@ -85,3 +85,9 @@ def selectComment():
     comment_id = request.form['comment_id']
     
     return comments.retrieveComment(comment_id)
+
+@app.route("/selectPostComment",methods=['POST'])
+def selectPostComment():
+    post_id = request.form['post_id']
+    
+    return comments.retrievePostComment(post_id)
