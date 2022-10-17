@@ -37,6 +37,9 @@ def verifyDuplicatedEmail(email):
 
 
 def userRegister(email, username, passwd):
+    if 'username' in session:
+        return redirect('/')
+
     if (valid_mail_characters(email)):
         if verifyDuplicatedEmail(email):
             if verifyDuplicatedUsername(username):
@@ -61,6 +64,9 @@ def userRegister(email, username, passwd):
     return render_template('register.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
 
 def userLogin(email, passwd):
+    if 'username' in session:
+        return redirect('/')
+
     if (valid_mail_characters(email)):
         mydb = dbconnect.connect()
         mycursor = mydb.cursor(buffered=True)
@@ -77,4 +83,4 @@ def userLogin(email, passwd):
             return redirect("/")
         else:
             return render_template('login.jinja', error='ou tu n tem cadastro ou botou errado joia?')
-    return render_template('register.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
+    return render_template('login.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
