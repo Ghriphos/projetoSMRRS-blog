@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, session, redirect
-import dbconnect, controller, validateEmail, re
+import dbconnect, controller, validateEmail, re, bcrypt
 
 def valid_mail_characters(emailToTest):
     allowedCharacters = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
@@ -40,10 +40,12 @@ def userRegister(email, username, passwd):
     if (valid_mail_characters(email)):
         if verifyDuplicatedEmail(email):
             if verifyDuplicatedUsername(username):
+                hashedPasswd = bcrypt.hashpw(passwd.encode('utf-8'), bcrypt.gensalt())
+
                 mydb = dbconnect.connect()
                 mycursor = mydb.cursor()
                 sql = "insert into users (email, username, passwd) values (%s, %s, %s)"
-                val = email, username, passwd
+                val = email, username, hashedPasswd
                 mycursor.execute(sql, val)
                 mydb.commit()
 
