@@ -19,6 +19,20 @@ def renderRegister():
 def renderLogin():
     return render_template("login.jinja")
 
+@app.route("/post/<id>",methods=['GET'])
+def renderPost(id):
+    result = posts.retrievePost(id)
+
+    if isinstance(result, str):
+        return redirect("/") # 404 or 500
+
+    [_, user_id, content, title, description, photo, created_at] = result[0]
+
+    post = {'title': title, 'description': description, 'content': content, 'photo': photo, 'created_at': created_at.strftime("%d de %B, %Y")}
+    author = {'username': user_id} # todo fetch post user
+
+    return render_template("post.jinja", post=post, author=author)
+
 @app.route("/login",methods=['POST'])
 def userLogin():
     email = request.form['email']
