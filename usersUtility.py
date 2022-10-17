@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session
+from flask import Flask, request, render_template, session, redirect
 import dbconnect, controller, validateEmail, re
 
 def valid_mail_characters(emailToTest):
@@ -51,7 +51,7 @@ def userRegister(email, username, passwd):
                 if rowsCount > 0:
                     session['username'] = username
                     print(session['username'])
-                    return render_template("main.jinja")
+                    return redirect("/")
                 else:
                     return render_template('register.jinja', error="Houve um erro interno.")
             return render_template('register.jinja', error="Nome de usuário já foi cadastrado.")
@@ -72,7 +72,7 @@ def userLogin(email, passwd):
         if rowsCount > 0:
             session['username'] = myresult[0][2]
             print(session['username'])
-            return render_template('main.jinja')
+            return redirect("/")
         else:
             return render_template('login.jinja', error='ou tu n tem cadastro ou botou errado joia?')
     return render_template('register.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
