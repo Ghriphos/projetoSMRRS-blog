@@ -15,10 +15,16 @@ def renderMain():
 
 @app.route("/register",methods=['GET'])
 def renderRegister():
+    if 'username' in session:
+        return redirect('/')
+
     return render_template("register.jinja")
 
 @app.route("/login",methods=['GET'])
 def renderLogin():
+    if 'username' in session:
+        return redirect('/')
+
     return render_template("login.jinja")
 
 @app.route("/post/<id>",methods=['GET'])
