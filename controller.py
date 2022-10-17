@@ -1,8 +1,12 @@
-from flask import Flask, request, render_template, session
+from flask import Flask, request, render_template, session, redirect
 from dotenv import load_dotenv
+from datetime import datetime
+import locale
+
 import usersUtility, posts, comments, os
 
 load_dotenv()
+locale.setlocale(locale.LC_TIME, 'pt_BR.utf8')
 
 app = Flask(__name__, static_url_path='/static/')
 app.secret_key = os.getenv('SECRET_KEY')
