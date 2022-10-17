@@ -75,4 +75,4 @@ def userLogin(email, passwd):
             return render_template('main.jinja')
         else:
             return render_template('login.jinja', error='ou tu n tem cadastro ou botou errado joia?')
-    return render_template('register.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
+    return render_template('login.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
