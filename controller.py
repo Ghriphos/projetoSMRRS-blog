@@ -28,9 +28,9 @@ def renderPost(id):
     if isinstance(result, str):
         return redirect("/") # 404 or 500
 
-    [_, user_id, content, title, description, photo, created_at] = result[0]
+    [post_id, user_id, content, title, description, photo, created_at] = result[0]
 
-    post = {'title': title, 'description': description, 'content': content, 'photo': photo, 'created_at': created_at.strftime("%d de %B, %Y")}
+    post = {'id': post_id, 'title': title, 'description': description, 'content': content, 'photo': photo, 'created_at': created_at.strftime("%d de %B, %Y")}
     author = {'username': user_id} # todo fetch post user
 
     return render_template("post.jinja", post=post, author=author)
