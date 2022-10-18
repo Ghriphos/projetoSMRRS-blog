@@ -43,7 +43,10 @@ def userRegister(email, username, passwd):
     if (valid_mail_characters(email)):
         if verifyDuplicatedEmail(email):
             if verifyDuplicatedUsername(username):
-                hashedPasswd = bcrypt.hashpw(passwd.encode('utf-8'), bcrypt.gensalt())
+                salt = bcrypt.gensalt()
+                passwd = passwd.encode('utf-8')
+                hashedPasswd = bcrypt.hashpw(passwd, salt)
+                print(hashedPasswd)
 
                 mydb = dbconnect.connect()
                 mycursor = mydb.cursor()
@@ -70,17 +73,27 @@ def userLogin(email, passwd):
     if (valid_mail_characters(email)):
         mydb = dbconnect.connect()
         mycursor = mydb.cursor(buffered=True)
-        sql = "select * from users where email = %s and passwd = %s;"
-        val = email, passwd
-        mycursor.execute(sql, val)
+        sql = "select passwd from users where email = %s;"
+        val = (email,)
+        mycursor.execute(sql,val)
         mydb.commit()
-        myresult = mycursor.fetchall()
+        hashedPasswd = mycursor.fetchall()
+        hashedPasswd = hashedPasswd[0][0]
+        print(hashedPasswd)
 
-        rowsCount = mycursor.rowcount
-        if rowsCount > 0:
-            session['username'] = myresult[0][2]
-            print(session['username'])
-            return redirect("/")
-        else:
-            return render_template('login.jinja', error='ou tu n tem cadastro ou botou errado joia?')
+        if bcrypt.checkpw(passwd.encode('utf-8'),hashedPasswd.encode('utf-8')):
+            sql = "select * from users where email = %s and passwd = %s;"
+            val = email, hashedPasswd
+            mycursor.execute(sql, val)
+            mydb.commit()
+            myresult = mycursor.fetchall()
+
+            rowsCount = mycursor.rowcount
+            if rowsCount > 0:
+                session['username'] = myresult[0][2]
+                print(session['username'])
+                return redirect("/")
+            else:
+                return render_template('login.jinja', error='Email ou senha incorretos')
+        return render_template('login.jinja', error="A senha informada não coincide com a cadastrada neste email")
     return render_template('login.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
