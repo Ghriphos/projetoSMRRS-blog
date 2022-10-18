@@ -44,6 +44,14 @@ def renderLogin():
 
     return render_template("login.jinja")
 
+@app.route("/importantJobs",methods=['GET'])
+def renderJobs():
+    return render_template("importantJobs.jinja")
+
+@app.route("/",methods=['GET'])
+def renderPsychoIF():
+    return render_template("psychoIF.jinja")
+
 @app.route("/post/<id>",methods=['GET'])
 def renderPost(id):
     result = posts.retrievePost(id)
