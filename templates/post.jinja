@@ -29,25 +29,27 @@
 
     <span>{{ comments|length }} {{ 'comentário' if comments|length == 1 else 'comentários' }}</span>
 
-    {% for comment in comments %}
-    <div class="my-3">
-        <div class="flex gap-2 items-start">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="mt-0.5 w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-            </svg>
+    <div class="flex flex-col gap-3 my-4">
+        {% for comment in comments %}
+        <div>
+            <div class="flex gap-2 items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="mt-0.5 w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
 
-            <div>
-                <div class="inline-block font-medium px-1.5 py-px bg-indigo-400/10 rounded text-indigo-400">@{{
-                    comment.author }}</div>
-                <span class="text-neutral-300">
-                    "{{ comment.content }}"
-                </span>
+                <div>
+                    <div class="inline-block font-medium px-1.5 py-px bg-indigo-400/10 rounded text-indigo-400">@{{
+                        comment.author }}</div>
+                    <span class="text-neutral-300">
+                        "{{ comment.content }}"
+                    </span>
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 
     {% if session['username'] %}
     <form action="/post/{{ post.id }}/comment" method="POST">
