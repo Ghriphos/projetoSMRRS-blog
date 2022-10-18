@@ -95,3 +95,24 @@ def userLogin(email, passwd):
                 return render_template('login.jinja', error='Email ou senha incorretos')
         return render_template('login.jinja', error="A senha informada não coincide com a cadastrada neste email")
     return render_template('login.jinja', error="A lista de caracteres não coincide com as permitidas no sistema, por favor, reveja os parametros informados e tente novamente.")
+
+def retrieveUser(user_id):
+    intAllowedCharacters = "^[0-9]+$"
+    if re.match(intAllowedCharacters, user_id):
+        mydb = dbconnect.connect()
+        mycursor = mydb.cursor(buffered=True)
+        user_id = str(user_id)
+        sql = "select * from users where user_id = %s"
+        val = (user_id,)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        myresult = mycursor.fetchall()
+        rowsCount = mycursor.rowcount
+
+        if rowsCount > 0:
+            return myresult
+        else:
+            return "deu ruim"
+
+    else:
+        return "parametros incorretos"

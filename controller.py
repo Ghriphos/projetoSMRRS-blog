@@ -97,3 +97,9 @@ def selectPostComment():
     post_id = request.form['post_id']
     
     return comments.retrievePostComment(post_id)
+
+@app.route("/selectUsers",methods=['POST'])
+def selectUsers():
+    user_id = request.form['user_id']
+    
+    return usersUtility.retrieveUser(user_id)
