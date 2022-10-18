@@ -1,0 +1,32 @@
+{% extends "main.jinja" %}
+
+{% block title %}Blog{% endblock title %}
+
+{% block content %}
+<div class="my-8 flex flex-col gap-6">
+    {% for post in posts %}
+    <div class="flex gap-5">
+        {% if post.photo is defined and (post.photo.startswith('/') or post.photo.startswith('http')) %}
+        <div class="w-52 h-52 bg-cover bg-center rounded-lg" style="background-image: url('{{ post.photo }}')">
+        </div>
+        {% endif %}
+        <div class="flex flex-col w-full justify-center pt-4.5">
+            <div class="font-sans">
+                <div class="text-xs font-sans text-white/60 font-medium mb-1.5">{{ post.created_at }}</div>
+                <h1 class="sm:text-lg text-base font-slab text-white font-semibold">{{ post.title }}</h1>
+            </div>
+            <div class="sm:text-base text-sm font-slab my-1.5 leading-7 text-white/80 line-clamp-3">
+                {{ post.content|truncate(256) }}
+            </div>
+            <div class="mt-auto flex gap-3 items-center py-1.5 mr-6">
+                <a class="mt-2.5 px-4 block font-xs py-1 font-medium text-indigo-400 bg-indigo-500/10 rounded-lg cursor-pointer hover:bg-indigo-600 hover:text-white"
+                    href="/post/{{ post.id }}">Continuar
+                    lendo</a>
+                <span class="ml-auto text-white/40" href="/post/{{ post.id }}">{{ post.comments }}
+                    {{ 'comentário' if post.comments == 1 else 'comentários' }}</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

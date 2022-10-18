@@ -7,7 +7,7 @@
     <title>{% block title %}{% endblock %}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com/?plugins=line-clamp"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -21,18 +21,19 @@
                     },
                 },
             },
-            plugins: [],
         }
     </script>
 </head>
 
-<body>
-    <div class="font-serif min-h-screen w-full bg-zinc-900">
+<body class="bg-zinc-900">
+    <div class="font-serif min-h-screen w-full pb-8">
         <div class="sm:h-14 text-white/80 bg-darkzinc border-b border-white/5 border-t-0">
             <div class="font-slab sm:flex items-center sm:px-8 md:h-14 gap-3 container mx-auto"
                 style="max-width: 49rem">
                 <div class="sm:h-14 py-4 px-5 sm:px-2 flex items-center">
-                    <p>LOGO
+                    <p
+                        class="sm:block sm:h-14 py-4 px-5 sm:px-2 text-indigo-400 font-medium cursor-default sm:border-b-2 sm:border-indigo-400 bg-indigo-600/10 sm:bg-transparent">
+                        LOGO
                     <p>
                     <div class="block sm:hidden cursor-pointer ml-auto bg-zinc-800 px-1.5 py-1.5 rounded-lg">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -42,12 +43,12 @@
                         </svg>
                     </div>
                 </div>
-                <div
-                    class="sm:block sm:h-14 py-4 px-5 sm:px-2 text-indigo-400 font-medium cursor-default sm:border-b-2 sm:border-indigo-400 bg-indigo-600/10 sm:bg-transparent">
+                <div class="sm:block sm:h-14 py-4 px-5 sm:px-2 font-medium cursor-pointer hover:text-white">
                     Quem Somos?</div>
                 <div class="sm:block sm:h-14 py-4 px-5 sm:px-2 font-medium cursor-pointer hover:text-white">Trabalhos
                     Importantes</div>
-                <div class="sm:block sm:h-14 py-4 px-5 sm:px-2 font-medium cursor-pointer hover:text-white">Blog</div>
+                <a href="/blog"
+                    class="sm:block sm:h-14 py-4 px-5 sm:px-2 font-medium cursor-pointer hover:text-white">Blog</a>
                 <div class="sm:pb-0 sm:px-2 sm:block sm:ml-auto">
                     {% if session['username'] is defined %}
                     <form method="POST" action="/logout">

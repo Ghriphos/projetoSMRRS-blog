@@ -59,3 +59,21 @@ def retrievePostComment(post_id):
             return myresult
         else:
             return []
+
+def countComments(post_id):
+    intAllowedCharacters = "^[0-9]+$"
+    if re.match(intAllowedCharacters, post_id):
+        mydb = dbconnect.connect()
+        mycursor = mydb.cursor(buffered=True)
+        post_id = str(post_id)
+        sql = "select count(*) from comments where post_id = %s"
+        val = (post_id,)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        myresult = mycursor.fetchone()
+        rowsCount = mycursor.rowcount
+
+        if rowsCount > 0:
+            return myresult[0]
+        else:
+            return 0

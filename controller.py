@@ -9,9 +9,26 @@ load_dotenv()
 app = Flask(__name__, static_url_path='/static/')
 app.secret_key = os.getenv('SECRET_KEY')
 
-@app.route("/",methods=['GET'])
-def renderMain():
-    return render_template("main.jinja")
+@app.route("/blog",methods=['GET'])
+def viewPosts():
+    posts_list = []
+    
+    for post in posts.retrievePosts():
+        [id, author_id, content, title, description, photo, created_at] = post
+        author_user = usersUtility.retrieveUser(str(author_id))[0]
+        
+        posts_list.append({
+            'id': id,
+            'author': author_user[2],
+            'title': title,
+            'description': description,
+            'content': content,
+            'photo': photo,
+            'comments': comments.countComments(str(id)),
+            'created_at': created_at.strftime("%d de %B, %Y"),
+        })
+
+    return render_template("posts.jinja", posts=posts_list)
 
 @app.route("/register",methods=['GET'])
 def renderRegister():

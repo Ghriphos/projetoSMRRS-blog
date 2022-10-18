@@ -45,3 +45,19 @@ def retrievePost(post_id):
 
     else:
         return "parametros incorretos"
+
+def retrievePosts():
+    mydb = dbconnect.connect()
+    mycursor = mydb.cursor(buffered=True)
+
+    sql = "select * from posts order by post_id desc"
+    mycursor.execute(sql)
+    mydb.commit()
+    
+    myresult = mycursor.fetchall()
+    rowsCount = mycursor.rowcount
+
+    if rowsCount > 0:
+        return myresult
+    else:
+        return []
