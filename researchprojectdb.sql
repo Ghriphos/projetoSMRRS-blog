@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Out-2022 às 01:56
+-- Tempo de geração: 18-Out-2022 às 03:24
 -- Versão do servidor: 10.4.25-MariaDB
 -- versão do PHP: 8.1.10
 
@@ -35,6 +35,14 @@ CREATE TABLE `comments` (
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `comments`
+--
+
+INSERT INTO `comments` (`comment_id`, `user_id`, `post_id`, `content`, `created_at`) VALUES
+(2, 123, 3, 'salfkajsfkjasglkhaskdlj', '2022-10-15 22:26:37'),
+(3, 123, 3, 'çlaksjdqpowrfjaslkjd', '2022-10-15 22:26:37');
+
 -- --------------------------------------------------------
 
 --
@@ -56,7 +64,7 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `user_id`, `content`, `title`, `description`, `photo`, `created_at`) VALUES
-(1, 123, 'lorem ipsun fodase lorem ipsun fodase lorem ipsun fodase lorem ipsun fodase', 'ghriphosaaaa', 'lorem ipsun fodase', 'naotem', '0000-00-00 00:00:00');
+(3, 123, 'salfkajsfkjasglkhaskdlj', 'sdkaljwfioq', 'adslkvnoiejradfjalskfqweasf', '=nil', '2022-10-15 21:51:55');
 
 -- --------------------------------------------------------
 
@@ -66,7 +74,7 @@ INSERT INTO `posts` (`post_id`, `user_id`, `content`, `title`, `description`, `p
 
 CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
-  `passwd` varchar(25) NOT NULL,
+  `passwd` text DEFAULT NULL,
   `username` varchar(25) NOT NULL,
   `email_verified_at` datetime DEFAULT NULL,
   `user_id` int(11) NOT NULL,
@@ -78,7 +86,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`email`, `passwd`, `username`, `email_verified_at`, `user_id`, `created_at`) VALUES
-('luisfernando@hotmail.com', '123123', 'ghriphos', '2022-10-11 11:45:22', 123, '2022-10-11 11:45:22');
+('luisfernando@hotmail.com', '123123', 'ghriphos', '2022-10-11 11:45:22', 123, '2022-10-11 11:45:22'),
+('luisfernandoo@hotmail.com', '123123', 'ghriphoss', NULL, 124, NULL),
+('luisfernandoo@hotmail.com', '123123', 'ghriphoss', NULL, 125, NULL),
+('luisfernandoo@hotmail.com', '123123', 'ghriphoss', NULL, 126, NULL),
+('laurentbmvasconcelos@hotmail.com', '$2b$12$YX.k/zr7.WE/OKIB4f0tn.mb1rD3Z1egjpECVITIqtmNJCxwn76ZO', 'l44ver', NULL, 129, NULL);
 
 --
 -- Índices para tabelas despejadas
@@ -113,19 +125,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- Restrições para despejos de tabelas
