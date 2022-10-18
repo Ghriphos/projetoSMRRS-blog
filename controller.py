@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, session, redirect
 from dotenv import load_dotenv
 from datetime import datetime
 
-import usersUtility, posts, comments, os
+import usersUtility, posts, comments, os, re
 
 load_dotenv()
 
@@ -35,22 +35,37 @@ def renderPost(id):
         return redirect("/") # 404 or 500
 
     [post_id, user_id, content, title, description, photo, created_at] = result[0]
+    author_user = usersUtility.retrieveUser(str(user_id))[0]
 
     post = {'id': post_id, 'title': title, 'description': description, 'content': content, 'photo': photo, 'created_at': created_at.strftime("%d de %B, %Y")}
-    author = {'username': user_id} # todo fetch post user
+    author = {'username': author_user[2]} # todo fetch post user
 
     post_comments = []
     
     for comment in comments.retrievePostComment(str(post_id)):
         [comment_id, author_id, post_id, content, created_at] = comment
 
+        user = usersUtility.retrieveUser(str(author_id))[0]
+
         post_comments.append({
-            'author': author_id,
+            'author': user[2],
             'content': content,
             'created_at': created_at
         })
 
     return render_template("post.jinja", post=post, author=author, comments=post_comments)
+
+@app.route("/post/<id>/comment",methods=['POST'])
+def createCommentPost(id):
+    if re.match("^[0-9]+$", id) or 'id' not in session:
+        content = request.form['content']
+        
+        if isinstance(content, str) and len(content) < 1024:
+            comments.insertComment(content, id, str(session['id']))
+
+            return redirect(f'/post/{id}')
+
+    return redirect(f'/')
 
 @app.route("/login",methods=['POST'])
 def userLogin():
