@@ -19,6 +19,9 @@
         </div>
     </div>
 </div>
+{% if post.photo is defined and (post.photo.startswith('/') or post.photo.startswith('http')) %}
+<img class="mt-3 mb-3 rounded-lg w-full h-80 object-cover" src="{{ post.photo }}">
+{% endif %}
 <div class="font-slab mt-2 text-lg leading-7 text-white/80">
     {{ post.content }}
 </div>
