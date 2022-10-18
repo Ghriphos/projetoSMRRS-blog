@@ -99,34 +99,34 @@ def createPost():
     
     return posts.insertPost(user_id, title, content, description, photo)
 
-@app.route("/selectPosts",methods=['POST'])
-def selectPost():
-    post_id = request.form['post_id']
+# @app.route("/selectPosts",methods=['POST'])
+# def selectPost():
+#     post_id = request.form['post_id']
     
-    return posts.retrievePost(post_id)
+#     return posts.retrievePost(post_id)
     
-@app.route("/comments", methods=['POST'])
-def createComment():
-    user_id = request.form['user_id']
-    post_id = request.form['post_id']
-    content = request.form['content']
+# @app.route("/comments", methods=['POST'])
+# def createComment():
+#     user_id = request.form['user_id']
+#     post_id = request.form['post_id']
+#     content = request.form['content']
 
-    return comments.insertComment(content, post_id, user_id)
+#     return comments.insertComment(content, post_id, user_id)
 
-@app.route("/selectComment",methods=['POST'])
-def selectComment():
-    comment_id = request.form['comment_id']
+# @app.route("/selectComment",methods=['POST'])
+# def selectComment():
+#     comment_id = request.form['comment_id']
     
-    return comments.retrieveComment(comment_id)
+#     return comments.retrieveComment(comment_id)
 
-@app.route("/selectPostComment",methods=['POST'])
-def selectPostComment():
-    post_id = request.form['post_id']
+# @app.route("/selectPostComment",methods=['POST'])
+# def selectPostComment():
+#     post_id = request.form['post_id']
     
-    return comments.retrievePostComment(post_id)
+#     return comments.retrievePostComment(post_id)
 
-@app.route("/selectUsers",methods=['POST'])
-def selectUsers():
-    user_id = request.form['user_id']
+# @app.route("/selectUsers",methods=['POST'])
+# def selectUsers():
+#     user_id = request.form['user_id']
     
-    return usersUtility.retrieveUser(user_id)
+#     return usersUtility.retrieveUser(user_id)
