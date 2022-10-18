@@ -57,8 +57,6 @@ def userRegister(email, username, passwd):
 
                 rowsCount = mycursor.rowcount
                 if rowsCount > 0:
-                    session['username'] = username
-                    print(session['username'])
                     return redirect("/")
                 else:
                     return render_template('register.jinja', error="Houve um erro interno.")
