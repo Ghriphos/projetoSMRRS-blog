@@ -57,7 +57,7 @@ def userRegister(email, username, passwd):
 
                 rowsCount = mycursor.rowcount
                 if rowsCount > 0:
-                    return redirect("/")
+                    return redirect("/login")
                 else:
                     return render_template('register.jinja', error="Houve um erro interno.")
             return render_template('register.jinja', error="Nome de usuário já foi cadastrado.")
