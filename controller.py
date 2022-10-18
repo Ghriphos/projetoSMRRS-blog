@@ -39,7 +39,18 @@ def renderPost(id):
     post = {'id': post_id, 'title': title, 'description': description, 'content': content, 'photo': photo, 'created_at': created_at.strftime("%d de %B, %Y")}
     author = {'username': user_id} # todo fetch post user
 
-    return render_template("post.jinja", post=post, author=author)
+    post_comments = []
+    
+    for comment in comments.retrievePostComment(str(post_id)):
+        [comment_id, author_id, post_id, content, created_at] = comment
+
+        post_comments.append({
+            'author': author_id,
+            'content': content,
+            'created_at': created_at
+        })
+
+    return render_template("post.jinja", post=post, author=author, comments=post_comments)
 
 @app.route("/login",methods=['POST'])
 def userLogin():
