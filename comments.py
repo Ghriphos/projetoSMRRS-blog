@@ -58,4 +58,4 @@ def retrievePostComment(post_id):
         if rowsCount > 0:
             return myresult
         else:
-            return "deu ruim"
+            return []
