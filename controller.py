@@ -61,6 +61,7 @@ def userLogin():
 
 @app.route("/logout",methods=['POST'])
 def logout():
+    session.pop('id', None)
     session.pop('username', None)
 
     return render_template("main.jinja")

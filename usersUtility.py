@@ -88,6 +88,7 @@ def userLogin(email, passwd):
 
             rowsCount = mycursor.rowcount
             if rowsCount > 0:
+                session['id'] = myresult[0][4] 
                 session['username'] = myresult[0][2]
                 print(session['username'])
                 return redirect("/")
