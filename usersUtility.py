@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, session, redirect
 import dbconnect, controller, validateEmail, re, bcrypt
 
 def valid_mail_characters(emailToTest):
-    allowedCharacters = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
+    allowedCharacters = "^[a-zA-Z0-9-_.]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
     if re.match(allowedCharacters,emailToTest):
         return True
     return False
@@ -46,7 +46,6 @@ def userRegister(email, username, passwd):
                 salt = bcrypt.gensalt()
                 passwd = passwd.encode('utf-8')
                 hashedPasswd = bcrypt.hashpw(passwd, salt)
-                print(hashedPasswd)
 
                 mydb = dbconnect.connect()
                 mycursor = mydb.cursor()
@@ -77,7 +76,6 @@ def userLogin(email, passwd):
         mydb.commit()
         hashedPasswd = mycursor.fetchall()
         hashedPasswd = hashedPasswd[0][0]
-        print(hashedPasswd)
 
         if bcrypt.checkpw(passwd.encode('utf-8'),hashedPasswd.encode('utf-8')):
             sql = "select * from users where email = %s and passwd = %s;"
