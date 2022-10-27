@@ -74,8 +74,12 @@ def userLogin(email, passwd):
         val = (email,)
         mycursor.execute(sql,val)
         mydb.commit()
-        hashedPasswd = mycursor.fetchall()
-        hashedPasswd = hashedPasswd[0][0]
+        rowsCount = mycursor.rowcount
+        if rowsCount > 0:
+            fetching = mycursor.fetchall()
+            hashedPasswd = fetching[0][0]
+        else:
+            return render_template('login.jinja', error="Email ou senha incorretos")
 
         if bcrypt.checkpw(passwd.encode('utf-8'),hashedPasswd.encode('utf-8')):
             sql = "select * from users where email = %s and passwd = %s;"
