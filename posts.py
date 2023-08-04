@@ -20,7 +20,7 @@ def insertPost(user_id, title, content, description, photo):
         if rows_count > 0:
             return "postagem concluída"
         else:
-            return "postagem mal-sucedidaa"
+            return "postagem mal-sucedida"
 
     else:
         return "Parametros incorretos"
